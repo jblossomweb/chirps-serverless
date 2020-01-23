@@ -1,0 +1,68 @@
+service: chirps-serverless
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  memorySize: 128
+  stage: dev
+#  region: us-east-1
+
+package:
+  exclude:
+    - .gitignore
+    - .git/**
+
+functions:
+  ping:
+    handler: controllers.ping
+    events:
+     - http:
+         path: ping
+         method: get
+
+  createChirp:
+    handler: controllers.createChirp
+    events:
+      - http:
+          path: chirps
+          method: post
+          cors: true
+
+  getChirp:
+    handler: controllers.getChirp
+    events:
+      - http:
+          path: chirps/{id}
+          method: get
+          cors: true
+
+  getChirps:
+    handler: controllers.getChirps
+    events:
+     - http:
+         path: chirps
+         method: get
+         cors: true
+
+  updateChirp:
+    handler: controllers.updateChirp
+    events:
+     - http:
+         path: chirps/{id}
+         method: put
+         cors: true
+
+  deleteChirp:
+    handler: controllers.deleteChirp
+    events:
+     - http:
+         path: chirps/{id}
+         method: delete
+         cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 4000
