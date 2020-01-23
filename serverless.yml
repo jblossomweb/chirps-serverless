@@ -52,6 +52,14 @@ functions:
          method: put
          cors: true
 
+  upvoteChirp:
+    handler: controllers.upvoteChirp
+    events:
+      - http:
+          path: chirps/{id}/votes
+          method: post
+          cors: true
+
   deleteChirp:
     handler: controllers.deleteChirp
     events:
